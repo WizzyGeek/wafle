@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wafle"
-version = "0.1.0"
+version = "0.1.1"
 description = "Wizzy's Awesome Functional LibrarE"
 authors = ["WizzyGeek <ojasscoding@gmail.com>"]
 license = "MIT"

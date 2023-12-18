@@ -31,7 +31,7 @@ class Star(t.Generic[G]):
     def __init__(self, func: t.Callable[..., G]) -> None:
         self.func = func
 
-    def __call__(self, args: tuple[t.Any, ...]) -> G:
+    def __call__(self, args: t.Iterable[t.Any]) -> G:
         return self.func(*args)
 
 star = Star
@@ -58,7 +58,7 @@ class Mapper(t.Generic[T]):
     def __or__(self, o: t.Callable[[T], G]) -> Mapper[G]:
         if callable(o):
             if isinstance(o, Star):
-                return Mapper(starmap(o, self.data)) # type: ignore
+                return Mapper(starmap(o.func, self.data)) # type: ignore
             return Mapper(map(o, self.data))
         else:
             return NotImplemented
