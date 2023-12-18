@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "wafle"
+version = "0.1.0"
+description = "Wizzy's Awesome Functional LibrarE"
+authors = ["WizzyGeek <ojasscoding@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[[tool.poetry.packages]]
+include = "wafle"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.7.1"
+
+[tool.mypy]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,6 @@
+proto.py
+.mypy_cache/
+.venv
+test.py
+.venv/
+**/__pycache__/
