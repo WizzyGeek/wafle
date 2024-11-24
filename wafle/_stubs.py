@@ -4,14 +4,15 @@ from functools import partial as _p
 import typing as t
 from itertools import zip_longest
 
-T = t.TypeVar("T")
-G = t.TypeVar("G")
-P = t.ParamSpec("P")
-Ts = t.TypeVarTuple("Ts")
+from .mapper import Mapper
+
 
 if t.TYPE_CHECKING:
+    T = t.TypeVar("T")
+    G = t.TypeVar("G")
+    P = t.ParamSpec("P")
+    Ts = t.TypeVarTuple("Ts")
     T3 = t.TypeVar("T3")
-    from . import Mapper
 
 def mzip(*iterables: t.Iterable[t.Any], strict: bool = False) -> Mapper[tuple[t.Any, ...]]:
     return Mapper(zip(*iterables, strict=strict))
