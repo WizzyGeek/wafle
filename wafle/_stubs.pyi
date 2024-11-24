@@ -83,6 +83,8 @@ class rpartial(t.Generic[*Ts, T]):
 #     @staticmethod
 #     def __call__(*args: *Ts, **kwargs) -> T: ...
 
+partial = _p
+
 # @t.overload
 # def with_predicate(func: type[filter[T]]) -> partial[t.Callable[[T], bool] | None, partial[t.Iterable[T], filter[T]]]: ...
 # @t.overload
