@@ -22,13 +22,11 @@ This is WAFLE pre-release, I am building
 ```py
 import wafle as wf
 
-_ = wf.mrange(1, 101)
-_ |= lambda x: ("Fizz" * (x % 3 == 0) + "Buzz" * (x % 5 == 0)) or str(x)
-wf.void(_ | print)
-
-# btw one liner is
-#  wf.mrange(1, 101) | (lambda x: ("Fizz" * (x % 3 == 0) + "Buzz" * (x % 5 == 0)) or str(x)) | print >= list
-
+(
+    wf.mrange(1, 101)
+    | (lambda x: ("Fizz" * (x % 3 == 0) + "Buzz" * (x % 5 == 0)) or str(x))
+    | print
+).void()
 ```
 
 Not convinced? good job! cause I wouldn't be either, You must be thinking "that's just
@@ -72,11 +70,9 @@ import itertools as it
 
 # make partial islice to use conviniently
 # I promised to add all typesafe itertools partials soon
-islice = wf.with_rightargs(it.islice)
+islice = wf.with_rightargs(it.islice)  # type: ignore
 
-_ = wf.M(input("Numbers: ").split()) | int
-_ = _ > islice(None, None, 2) # type: ignore
-
+_ = wf.M(input("Numbers: ").split()) | int > islice(None, None, 2)  # type: ignore
 print(_ >= sum)
 ```
 

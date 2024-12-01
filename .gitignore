@@ -4,3 +4,4 @@ proto.py
 test.py
 .venv/
 **/__pycache__/
+docs/build/*
