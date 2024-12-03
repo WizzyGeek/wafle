@@ -83,7 +83,7 @@ def mrange(*args: int) -> Mapper[int]:
 
 def rpartial(func, /, *args, **keywords):
     """creates a partial where the supplied positional arguments
-    are supplied as the right most positional arguments in order
+    are supplied as the right most positional arguments in ltr order
 
     Parameters
     ----------

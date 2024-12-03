@@ -1,6 +1,5 @@
 import typing as t
 from . import Mapper as Mapper
-from functools import partial as _p
 
 T = t.TypeVar("T")
 G = t.TypeVar("G")
@@ -56,12 +55,12 @@ def mrange(start: int, stop: int) -> Mapper[int]: ...
 def mrange(start: int, stop: int, step: int) -> Mapper[int]: ...
 
 class rpartial(t.Generic[*Ts, T]):
-    @t.overload
-    def __new__(
-        cls, func: type[filter], arg1: t.Iterable[T], **kwargs
-    ) -> rpartial[t.Callable[[T], bool] | None, filter[T]]: ...  # type: ignore[overload-overlap]
-    # @t.overload # Problematic for mypy
-    # def __new__(cls, func: t.Callable, /, *args, **kwargs) -> rpartial[*Ts, T]: ... # type: ignore[overload-overlap]
+    # @t.overload
+    # def __new__(
+    #     cls, func: type[filter], arg1: t.Iterable[T], **kwargs
+    # ) -> rpartial[t.Callable[[T], bool] | None, filter[T]]: ...  # type: ignore[overload-overlap]
+    @t.overload  # Problematic for mypy
+    def __new__(cls, func: t.Callable, /, *args, **kwargs) -> rpartial[*Ts, T]: ...  # type: ignore[overload-overlap]
     @t.overload
     def __new__(
         cls, func: t.Callable[[T3, G], T], arg1: G, **kwargs
@@ -94,25 +93,34 @@ class rpartial(t.Generic[*Ts, T]):
     @staticmethod
     def __call__(*args: *Ts, **kwargs: t.Any) -> T: ...
 
-# class partial(t.Generic[*Ts, T]):
-#     # @t.overload
-#     # def __new__(cls, func: type[filter], arg1: t.Callable[[T], bool] | None, **kwargs) -> partial[[t.Iterable[T]], filter[T]]: ... # type: ignore[overload-overlap]
-#     # @t.overload # Problematic for mypy
-#     # def __new__(cls, func: t.Callable, /, *args, **kwargs) -> rpartial[*Ts, T]: ... # type: ignore[overload-overlap]
-#     @t.overload
-#     def __new__(cls, func: t.Callable[[T3, *Ts], T], arg1: T3, **kwargs) -> partial[*Ts, T]: ...
-#     @t.overload
-#     def __new__(cls, func: t.Callable[[T3, T4, *Ts], T], arg1: T3, arg2: T4, **kwargs) -> partial[*Ts, T]: ...
-#     @t.overload
-#     def __new__(cls, func: t.Callable[[T3, T4, G, *Ts], T], arg1: T3, arg2: T4, arg3: G, **kwargs) -> partial[*Ts, T]: ...
+class partial(t.Generic[*Ts, T]):
+    # @t.overload
+    # def __new__(cls, func: type[filter], arg1: t.Callable[[T], bool] | None, **kwargs) -> partial[[t.Iterable[T]], filter[T]]: ... # type: ignore[overload-overlap]
+    @t.overload  # Problematic for mypy
+    def __new__(cls, func: t.Callable, /, *args, **kwargs) -> rpartial[*Ts, T]: ...  # type: ignore[overload-overlap]
+    @t.overload
+    def __new__(
+        cls, func: t.Callable[[T3, *Ts], T], arg1: T3, **kwargs
+    ) -> partial[*Ts, T]: ...
+    @t.overload
+    def __new__(
+        cls, func: t.Callable[[T3, T4, *Ts], T], arg1: T3, arg2: T4, **kwargs
+    ) -> partial[*Ts, T]: ...
+    @t.overload
+    def __new__(
+        cls,
+        func: t.Callable[[T3, T4, G, *Ts], T],
+        arg1: T3,
+        arg2: T4,
+        arg3: G,
+        **kwargs,
+    ) -> partial[*Ts, T]: ...
+    @t.overload
+    def __new__(cls, func: t.Callable[..., T], *args, **kwargs) -> partial[*Ts, T]: ...
+    @staticmethod
+    def __call__(*args: *Ts, **kwargs) -> T: ...
 
-#     @t.overload
-#     def __new__(cls, func: t.Callable[..., T], *args, **kwargs) -> partial[*Ts, T]: ...
-
-#     @staticmethod
-#     def __call__(*args: *Ts, **kwargs) -> T: ...
-
-partial = _p
+# partial = _p
 
 # @t.overload
 # def with_predicate(func: type[filter[T]]) -> partial[t.Callable[[T], bool] | None, partial[t.Iterable[T], filter[T]]]: ...
