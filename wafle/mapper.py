@@ -124,6 +124,7 @@ class Mapper(t.Generic[T]):
             return NotImplemented
 
     __ior__ = __or__
+    map = __or__
 
     def __gt__(
         self, transformer: t.Callable[[t.Iterable[T]], t.Iterable[G]]

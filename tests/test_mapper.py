@@ -26,6 +26,14 @@ def test_mapper_or(mappr):
     assert len(a >= list) == 10
 
 
+def test_mapper_map(mappr):
+    assert (mappr.map(lambda k: 2 * k) >= sum) == 90
+
+
+def test_starmap_map(mappr):
+    assert ((mappr.map(lambda k: (k, 1)).map(Star(lambda k, _: k))) >= sum) == 45
+
+
 def test_mapper_truediv(mappr):
     a = mappr / (lambda k: None)
     assert len(a >= list) == 10
@@ -48,7 +56,7 @@ def test_mapper_transform(mappr):
     assert c == 25
 
 
-def test_starmap(mappr):
+def test_starmap_ior(mappr):
     mappr |= lambda k: (k,)
     mappr |= Star(lambda k: k)
     assert (mappr >= sum) == 45
